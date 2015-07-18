@@ -26,7 +26,7 @@ module.exports = {
 			]
 		},
 		css: [
-			'public/application.min.css',
+			'public/css/application.min.css',
 			'public/modules/**/css/*.css'
 		],
 		js: [

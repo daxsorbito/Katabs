@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/application.min.css', 'public/modules/**/*.css'],
+		clientCSS: ['public/css/application.min.css', 'public/modules/**/*.css'],
 		mochaTests: ['app/tests/**/*.js']
 	};
 
@@ -126,22 +126,23 @@ module.exports = function(grunt) {
 		less : {
 			production: {
 				options: {
-					paths: ['public/less'],
+					paths: ['public/lib/bootstrap/less'],
 					cleancss: true,
 					compress: true
 				},
 				files: {
-					'public/application.min.css': 'public/less/application.less'
+					'public/css/application.min.css': ['public/less/application.less', 'public/modules/**/css/*.less']
 				}
 			},
 			development: {
 				options: {
+					paths: ['public/lib/bootstrap/less'],
 					sourceMap: true,
 					ieCompat: true,
 					dumpLineNumbers: true
 				},
 				files: {
-					'public/application.min.css': 'public/less/application.less'
+					'public/css/application.min.css': ['public/less/application.less', 'public/modules/**/css/*.less']
 				}
 			}
 		}
