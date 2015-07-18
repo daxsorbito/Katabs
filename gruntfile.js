@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/css/application.min.css', 'public/modules/**/*.css'],
+		lessCSS: ['public/modules/**/css/*.less'],
 		mochaTests: ['app/tests/**/*.js']
 	};
 
@@ -47,7 +48,14 @@ module.exports = function(grunt) {
 				options: {
 					livereload: true
 				}
-			}
+			},
+			lessCSS: {
+				files: watchFiles.lessCSS,
+				tasks: ['lesslint', 'less'],
+				options: {
+					livereload: true
+				}
+			},
 		},
 		jshint: {
 			all: {
@@ -63,6 +71,11 @@ module.exports = function(grunt) {
 			},
 			all: {
 				src: watchFiles.clientCSS
+			}
+		},
+		lesslint: {
+			all: {
+				src: watchFiles.lessCSS
 			}
 		},
 		nodemon: {
@@ -152,6 +165,7 @@ module.exports = function(grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-lesslint');
 
 	// Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
@@ -175,7 +189,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('secure', ['env:secure', 'lint', 'concurrent:default']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint', ['jshint', 'csslint', 'lesslint']);
 
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'less']);
